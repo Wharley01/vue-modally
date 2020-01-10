@@ -1,18 +1,32 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1>HOME</h1>
+
+    <button @click="test2">Fire first</button>
+    <button @click="test">Fire second</button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import TestModalTwo from "./TestModalTwo";
+import TestModalOne from "./TestModalOne";
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
+  created() {},
+  methods: {
+    test() {
+      this.$vmodal.show(TestModalTwo, {
+        props: { name: "wale" },
+        options: { width: 500 }
+      });
+    },
+    test2() {
+      this.$vmodal.show(TestModalOne, {
+        props: { name: "Adewale" },
+        options: {}
+      });
+    }
   }
-}
+};
 </script>
+
+<style></style>
