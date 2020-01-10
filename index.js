@@ -1,5 +1,5 @@
-import ModalContainer from './views/ModalsContainer.vue'
-import Modal from './views/Modal.vue'
+import ModalContainer from './src/views/ModalsContainer.vue'
+import Modal from './src/views/Modal.vue'
 
 const VModal = {
     root: null,

@@ -12,7 +12,7 @@
           class="vm__modal__box_container animated faster"
           :class="{ zoomIn: !closed, zoomOut: closed }"
         >
-          <slot @close.once="closeModal"></slot>
+          <slot></slot>
         </div>
       </div>
     </div>
@@ -41,12 +41,11 @@ export default {
       transition_delay: 300
     };
   },
+  created() {},
   methods: {
     closeModal() {
       this.closed = true;
-      setTimeout(() => {
-        this.root.$emit("closeModal", this.modal_index);
-      }, this.transition_delay);
+      this.root.$emit("close", this.modal_index);
     }
   }
 };
@@ -68,6 +67,8 @@ export default {
     margin-top: auto;
     margin-bottom: auto;
     width: 100%;
+    overflow: auto !important;
+
     .vm__modal__box {
       .vm__modal__box_container {
         border-radius: 12px;

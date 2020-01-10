@@ -1,29 +1,72 @@
 # modal
 
-## Project setup
+## Installation
+
 ```
-yarn install
+yarn add vue-modally
 ```
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
+### How to use
+
+Include plugin in your `main.js` file.
+
+```javascript
+import Modally from 'vue-modally'
+
+Vue.use(Modally)
+
+/*
+you can provide default options like this:
+
+Example:
+
+Vue.use(Modally, { width: 900; padding: 20 });
+
+
 ```
 
-### Compiles and minifies for production
-```
-yarn run build
+Put Vue-Modally's Root component in your App.vue
+
+```jsx
+<template>
+<div id="app">
+...
+
+<router-view />
+
+<VModalsComponent></VModalsComponent>//here
+...
+</div>
+</template>
+
+...
 ```
 
-### Run your tests
-```
-yarn run test
+### Open a modal
+
+Example below shows how to evoke a modal using Vue component
+
+#### your template
+
+```html
+<template>
+  <button @click="openModal">Open my modal</button>
+</template>
 ```
 
-### Lints and fixes files
-```
-yarn run lint
-```
+#### Your javascript
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```javascript
+import MyModal from "./MyModal.vue"; //import your Vue component
+export default {
+  created() {},
+  methods: {
+    openModal() {
+      this.$vmodal.show(MyModal, {
+        props: { name: "wale", company: "macroware" }, // you have access to this props in MyModal compoent
+        options: { width: 500 }
+      });
+    }
+  }
+};
+```

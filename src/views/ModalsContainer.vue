@@ -4,17 +4,12 @@
       v-for="(modal, index) in modals"
       :key="index"
       :bind="$attrs"
-      @close="closeModal"
       :modal_index="index"
       :modal_width="modal.options.width"
       :modal_padding="modal.options.padding"
-      :style="'z-index: ' + index"
+      :style="'z-index: ' + (20 + index)"
     >
-      <component
-        @close="closeModal(index)"
-        v-bind="modal.props"
-        :is="modal.component"
-      ></component>
+      <component @close="closeModal(index)" v-bind="modal.props" :is="modal.component"></component>
     </Modal>
   </div>
 </template>
@@ -22,7 +17,6 @@
 <script>
 // @ is an alias to /src
 import Modal from "./Modal";
-import VModal from "../plugin";
 export default {
   name: "ModalsContainer",
   inheritAttrs: false,
@@ -34,12 +28,13 @@ export default {
   },
   data() {
     return {
-      modals: []
+      modals: [],
+      transition_delay: 300
     };
   },
   created() {
     this.root.$on("addNewModal", this.addNewModal);
-    this.root.$on("closeModal", this.closeModal);
+    this.root.$on("close", this.closeModal);
   },
   methods: {
     addNewModal(component, configs) {
@@ -48,11 +43,12 @@ export default {
         ...configs
       };
 
-      console.log({ component });
       this.modals.push(component);
     },
     closeModal(index) {
-      if (index > -1) this.modals.splice(index, 1);
+      setTimeout(() => {
+        if (index > -1) this.modals.splice(index, 1);
+      }, this.transition_delay);
     }
   },
   computed: {}

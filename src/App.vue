@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <VModalsComponent ref="root_modal_container"></VModalsComponent>
+    <VModalsComponent></VModalsComponent>
   </div>
 </template>
 <script>
