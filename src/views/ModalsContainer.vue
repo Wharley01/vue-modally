@@ -9,7 +9,11 @@
       :modal_padding="modal.options.padding"
       :style="'z-index: ' + (20 + index)"
     >
-      <component @close="closeModal(index)" v-bind="modal.props" :is="modal.component"></component>
+      <component
+        @close="closeModal(index)"
+        v-bind="modal.props"
+        :is="modal.component"
+      ></component>
     </Modal>
   </div>
 </template>
@@ -35,6 +39,13 @@ export default {
   created() {
     this.root.$on("addNewModal", this.addNewModal);
     this.root.$on("close", this.closeModal);
+    if (typeof window != "undefined") {
+      document.addEventListener("keydown", e => {
+        if (e.keyCode == 27) {
+          this.closeLastModal();
+        }
+      });
+    }
   },
   methods: {
     addNewModal(component, configs) {
@@ -49,6 +60,11 @@ export default {
       setTimeout(() => {
         if (index > -1) this.modals.splice(index, 1);
       }, this.transition_delay);
+    },
+    closeLastModal() {
+      if (this.modals.length > 0) {
+        this.modals.pop();
+      }
     }
   },
   computed: {}
