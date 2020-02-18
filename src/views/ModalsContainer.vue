@@ -7,13 +7,11 @@
       :modal_index="index"
       :modal_width="modal.options.width"
       :modal_padding="modal.options.padding"
-      :style="'z-index: ' + (20 + index)"
+      :modal_background="modal.options.background"
+      :closed="modal.closed"
+      :style="'z-index: ' + (101 + index)"
     >
-      <component
-        @close="closeModal(index)"
-        v-bind="modal.props"
-        :is="modal.component"
-      ></component>
+      <component @close="closeModal(index)" v-bind="modal.props" :is="modal.component"></component>
     </Modal>
   </div>
 </template>
@@ -51,19 +49,30 @@ export default {
     addNewModal(component, configs) {
       component = {
         ...component,
-        ...configs
+        ...configs,
+        closed: false
       };
 
       this.modals.push(component);
     },
+    setModalCloseState(index) {
+      let modals = this.modals;
+      modals[index].closed = true;
+      this.modals = modals;
+    },
     closeModal(index) {
+      this.setModalCloseState(index);
       setTimeout(() => {
         if (index > -1) this.modals.splice(index, 1);
       }, this.transition_delay);
     },
     closeLastModal() {
       if (this.modals.length > 0) {
-        this.modals.pop();
+        this.setModalCloseState(this.modals.length - 1);
+
+        setTimeout(() => {
+          if (this.modals.length > 0) this.modals.pop();
+        }, this.transition_delay);
       }
     }
   },

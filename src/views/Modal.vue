@@ -8,7 +8,7 @@
               e.stopPropagation();
             }
           "
-          :style="'max-width: ' + modal_width + 'px'"
+          :style="'max-width: ' + modal_width + 'px; background: '+modal_background"
           class="vm__modal__box_container animated faster"
           :class="{ zoomIn: !closed, zoomOut: closed }"
         >
@@ -26,9 +26,17 @@ export default {
     modal_index: {
       type: Number
     },
+    closed: {
+      type: Boolean,
+      default: false
+    },
     modal_width: {
       type: Number,
       default: 700
+    },
+    modal_background: {
+      type: String,
+      default: "white"
     },
     modal_padding: {
       type: Number,
@@ -37,14 +45,12 @@ export default {
   },
   data() {
     return {
-      closed: false,
       transition_delay: 300
     };
   },
   created() {},
   methods: {
     closeModal() {
-      this.closed = true;
       this.root.$emit("close", this.modal_index);
     }
   }
@@ -72,7 +78,6 @@ export default {
     .vm__modal__box {
       .vm__modal__box_container {
         border-radius: 12px;
-        background: #fff;
         margin-left: auto;
         width: 100%;
         margin-right: auto;

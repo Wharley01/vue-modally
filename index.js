@@ -12,7 +12,8 @@ const VModal = {
 
         let default_options = {
             width: 700,
-            padding: 20
+            padding: 20,
+            background: 'white'
         }
 
         if (options) {

@@ -2,10 +2,11 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import './registerServiceWorker'
 import Modally from '../index';
 
-Vue.use(Modally);
+Vue.use(Modally, {
+  background: 'red'
+});
 
 Vue.config.productionTip = false
 
