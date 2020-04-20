@@ -1,6 +1,6 @@
 {
   "name": "vue-modally",
-  "version": "1.5.7",
+  "version": "1.9.7",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"

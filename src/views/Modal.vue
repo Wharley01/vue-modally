@@ -1,7 +1,10 @@
 <template>
   <div @click="closeModal" class="vm__modal__wrapper">
-    <div class="vm__modal__container">
-      <div :style="'padding: ' + modal_padding + 'px'" class="vm__modal__box">
+    <div
+      class="vm__modal__container"
+      :class="`${modal_type == 'modal' && 'is-modal'} ${modal_type == 'panel' && 'is-panel'}`"
+    >
+      <div :style="'padding: ' + (!is_panel ? modal_padding:0) + 'px'" class="vm__modal__box">
         <div
           @click="
             e => {
@@ -10,7 +13,7 @@
           "
           :style="'max-width: ' + modal_width + 'px; background: '+modal_background"
           class="vm__modal__box_container animated faster"
-          :class="{ zoomIn: !closed, zoomOut: closed }"
+          :class="`${!closed ? (is_panel ? 'bounceInUp':'zoomIn'):(is_panel ? 'bounceOutDown':'zoomOut')} ${is_panel && 'is-panel'}`"
         >
           <slot></slot>
         </div>
@@ -41,6 +44,10 @@ export default {
     modal_padding: {
       type: Number,
       default: 20
+    },
+    modal_type: {
+      type: String,
+      default: 20
     }
   },
   data() {
@@ -52,6 +59,11 @@ export default {
   methods: {
     closeModal() {
       this.root.$emit("close", this.modal_index);
+    }
+  },
+  computed: {
+    is_panel() {
+      return this.modal_type == "panel";
     }
   }
 };
@@ -69,15 +81,27 @@ export default {
   left: 0;
   display: flex;
   flex-direction: column;
+
   .vm__modal__container {
+    &.is-modal {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+    &.is-panel {
+      margin-top: auto;
+      margin-bottom: 0;
+    }
     margin-top: auto;
     margin-bottom: auto;
     width: 100%;
     overflow: auto !important;
-
     .vm__modal__box {
       .vm__modal__box_container {
-        border-radius: 12px;
+        &.is-panel {
+          border-bottom-left-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+        }
+        border-radius: 15px;
         margin-left: auto;
         width: 100%;
         margin-right: auto;

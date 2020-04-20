@@ -8,6 +8,7 @@
       :modal_width="modal.options.width"
       :modal_padding="modal.options.padding"
       :modal_background="modal.options.background"
+      :modal_type="modal.options.type"
       :closed="modal.closed"
       :style="'z-index: ' + (101 + index)"
     >
