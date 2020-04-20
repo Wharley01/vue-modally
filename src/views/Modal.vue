@@ -1,19 +1,41 @@
 <template>
-  <div @click="closeModal" class="vm__modal__wrapper">
+  <div
+    @click="closeModal"
+    :class="blur ? 'blur' : ''"
+    class="vm__modal__wrapper"
+  >
     <div
       class="vm__modal__container"
-      :class="`${modal_type == 'modal' && 'is-modal'} ${modal_type == 'panel' && 'is-panel'}`"
+      :class="
+        `${modal_type == 'modal' && 'is-modal'} ${modal_type == 'panel' &&
+          'is-panel'}`
+      "
     >
-      <div :style="'padding: ' + (!is_panel ? modal_padding:0) + 'px'" class="vm__modal__box">
+      <div
+        :style="'padding: ' + (!is_panel ? modal_padding : 0) + 'px'"
+        class="vm__modal__box"
+      >
         <div
           @click="
-            e => {
+            (e) => {
               e.stopPropagation();
             }
           "
-          :style="'max-width: ' + modal_width + 'px; background: '+modal_background"
+          :style="
+            'max-width: ' + modal_width + 'px; background: ' + modal_background
+          "
           class="vm__modal__box_container animated faster"
-          :class="`${!closed ? (is_panel ? 'bounceInUp':'zoomIn'):(is_panel ? 'bounceOutDown':'zoomOut')} ${is_panel && 'is-panel'}`"
+          :class="
+            `${
+              !closed
+                ? is_panel
+                  ? 'bounceInUp'
+                  : 'zoomIn'
+                : is_panel
+                ? 'bounceOutDown'
+                : 'zoomOut'
+            } ${is_panel && 'is-panel'}`
+          "
         >
           <slot></slot>
         </div>
@@ -27,45 +49,49 @@ export default {
   name: "Modal",
   props: {
     modal_index: {
-      type: Number
+      type: Number,
     },
     closed: {
       type: Boolean,
-      default: false
+      default: false,
     },
     modal_width: {
       type: Number,
-      default: 700
+      default: 700,
     },
     modal_background: {
       type: String,
-      default: "white"
+      default: "white",
     },
     modal_padding: {
       type: Number,
-      default: 20
+      default: 20,
     },
     modal_type: {
       type: String,
-      default: 20
-    }
+      default: 20,
+    },
+    blur: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
-      transition_delay: 300
+      transition_delay: 300,
     };
   },
   created() {},
   methods: {
     closeModal() {
       this.root.$emit("close", this.modal_index);
-    }
+    },
   },
   computed: {
     is_panel() {
       return this.modal_type == "panel";
-    }
-  }
+    },
+  },
 };
 </script>
 <style src="../assets/animate.css"></style>
@@ -73,14 +99,17 @@ export default {
 .vm__modal__wrapper {
   position: fixed;
   width: 100%;
-  -webkit-backdrop-filter: blur(7px);
-  backdrop-filter: blur(7px);
+
   background-color: rgba(0, 0, 0, 0.2);
   height: 100%;
   top: 0;
   left: 0;
   display: flex;
   flex-direction: column;
+  &.blur {
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+  }
 
   .vm__modal__container {
     &.is-modal {

@@ -14,7 +14,8 @@ const VModal = {
             width: 700,
             padding: 20,
             background: 'white',
-            type: 'modal'
+            type: 'modal',
+            blur: true
         }
 
         if (options) {

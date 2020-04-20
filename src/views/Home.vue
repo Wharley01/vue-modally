@@ -16,16 +16,16 @@ export default {
     test() {
       this.$vmodal.show(TestModalTwo, {
         props: { name: "wale", company: "macroware" },
-        options: { width: 500, type: "panel" }
+        options: { width: 500, type: "panel" },
       });
     },
     test2() {
       this.$vmodal.show(TestModalOne, {
         props: { name: "Adewale" },
-        options: { width: 900, padding: 40, type: "panel" }
+        options: { width: 900, padding: 40, type: "panel", blur: false },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
