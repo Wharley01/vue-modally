@@ -1,11 +1,12 @@
 {
   "name": "vue-modally",
-  "version": "1.9.7",
+  "version": "2.1.0",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "animate.css": "^4.1.0",
     "core-js": "^3.4.4",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",

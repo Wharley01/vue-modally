@@ -12,15 +12,14 @@
       versions have evolved over the years, sometimes by accident, sometimes on
       purpose (injected humour and the like).
     </p>
-    <div style="height: 1440px"></div>
-    <button @click="$emit('close')">Close</button>
+    <button @click="$emit('close-all')">Close all</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "ModalSecond",
-  props: ["name", "company"]
+  props: ["name", "company"],
 };
 </script>
 

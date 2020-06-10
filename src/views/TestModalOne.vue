@@ -15,12 +15,11 @@ export default {
     test() {
       this.$vmodal.show(TestModalTwo, {
         props: { name: "Adewale" },
-        options: { width: 500 }
+        options: { width: 500, type: "panel" },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>

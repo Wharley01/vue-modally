@@ -29,10 +29,10 @@
             `${
               !closed
                 ? is_panel
-                  ? 'bounceInUp'
+                  ? 'slideInUp'
                   : 'zoomIn'
                 : is_panel
-                ? 'bounceOutDown'
+                ? 'slideOutDown'
                 : 'zoomOut'
             } ${is_panel && 'is-panel'}`
           "

@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Modally from '../index';
-
+import "animate.css"
 Vue.use(Modally, {
   background: 'red'
 });

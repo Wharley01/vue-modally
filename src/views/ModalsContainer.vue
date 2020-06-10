@@ -13,7 +13,12 @@
       :closed="modal.closed"
       :style="'z-index: ' + (101 + index)"
     >
-      <component @close="closeModal(index)" v-bind="modal.props" :is="modal.component"></component>
+      <component
+        @close="closeModal(index)"
+        @close-all="closeAllModal"
+        v-bind="modal.props"
+        :is="modal.component"
+      ></component>
     </Modal>
   </div>
 </template>
@@ -25,22 +30,24 @@ export default {
   name: "ModalsContainer",
   inheritAttrs: false,
   props: {
-    tst: String
+    tst: String,
   },
   components: {
-    Modal
+    Modal,
   },
   data() {
     return {
       modals: [],
-      transition_delay: 300
+      transition_delay: 300,
     };
   },
   created() {
     this.root.$on("addNewModal", this.addNewModal);
     this.root.$on("close", this.closeModal);
+    this.root.$on("close-all", this.closeAllModal);
+
     if (typeof window != "undefined") {
-      document.addEventListener("keydown", e => {
+      document.addEventListener("keydown", (e) => {
         if (e.keyCode == 27) {
           this.closeLastModal();
         }
@@ -52,7 +59,7 @@ export default {
       component = {
         ...component,
         ...configs,
-        closed: false
+        closed: false,
       };
 
       this.modals.push(component);
@@ -68,6 +75,20 @@ export default {
         if (index > -1) this.modals.splice(index, 1);
       }, this.transition_delay);
     },
+    closeAllModal() {
+      // this.modals = [];
+      // return;
+      let total = this.modals.length;
+      if (total === 1) {
+        this.closeLastModal();
+        return;
+      }
+
+      for (let index = 0; index < total; index++) {
+        this.setModalCloseState(index);
+        setTimeout(() => this.modals.pop(), index * this.transition_delay);
+      }
+    },
     closeLastModal() {
       if (this.modals.length > 0) {
         this.setModalCloseState(this.modals.length - 1);
@@ -76,8 +97,8 @@ export default {
           if (this.modals.length > 0) this.modals.pop();
         }, this.transition_delay);
       }
-    }
+    },
   },
-  computed: {}
+  computed: {},
 };
 </script>
