@@ -1,9 +1,5 @@
 <template>
-  <div
-    @click="closeModal"
-    :class="blur ? 'blur' : ''"
-    class="vm__modal__wrapper"
-  >
+  <div @click="closeModal" :class="blur ? 'blur' : ''" class="vm__modal__wrapper">
     <div
       class="vm__modal__container"
       :class="
@@ -11,10 +7,7 @@
           'is-panel'}`
       "
     >
-      <div
-        :style="'padding: ' + (!is_panel ? modal_padding : 0) + 'px'"
-        class="vm__modal__box"
-      >
+      <div :style="'padding: ' + (!is_panel ? modal_padding : 0) + 'px'" class="vm__modal__box">
         <div
           @click="
             (e) => {
@@ -49,49 +42,53 @@ export default {
   name: "Modal",
   props: {
     modal_index: {
-      type: Number,
+      type: Number
     },
     closed: {
       type: Boolean,
-      default: false,
+      default: false
     },
     modal_width: {
       type: Number,
-      default: 700,
+      default: 700
     },
     modal_background: {
       type: String,
-      default: "white",
+      default: "white"
     },
     modal_padding: {
       type: Number,
-      default: 20,
+      default: 20
+    },
+    modal_closable: {
+      type: Boolean,
+      default: true
     },
     modal_type: {
       type: String,
-      default: 20,
+      default: 20
     },
     blur: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   data() {
     return {
-      transition_delay: 300,
+      transition_delay: 300
     };
   },
   created() {},
   methods: {
     closeModal() {
-      this.root.$emit("close", this.modal_index);
-    },
+      if (this.modal_closable) this.root.$emit("close", this.modal_index);
+    }
   },
   computed: {
     is_panel() {
       return this.modal_type == "panel";
-    },
-  },
+    }
+  }
 };
 </script>
 <style src="../assets/animate.css"></style>

@@ -7,6 +7,7 @@
       :modal_index="index"
       :modal_width="modal.options.width"
       :modal_padding="modal.options.padding"
+      :modal_closable="modal.options.closable"
       :modal_background="modal.options.background"
       :modal_type="modal.options.type"
       :blur="modal.options.blur"
@@ -30,15 +31,15 @@ export default {
   name: "ModalsContainer",
   inheritAttrs: false,
   props: {
-    tst: String,
+    tst: String
   },
   components: {
-    Modal,
+    Modal
   },
   data() {
     return {
       modals: [],
-      transition_delay: 300,
+      transition_delay: 300
     };
   },
   created() {
@@ -47,7 +48,7 @@ export default {
     this.root.$on("close-all", this.closeAllModal);
 
     if (typeof window != "undefined") {
-      document.addEventListener("keydown", (e) => {
+      document.addEventListener("keydown", e => {
         if (e.keyCode == 27) {
           this.closeLastModal();
         }
@@ -59,7 +60,7 @@ export default {
       component = {
         ...component,
         ...configs,
-        closed: false,
+        closed: false
       };
 
       this.modals.push(component);
@@ -97,8 +98,8 @@ export default {
           if (this.modals.length > 0) this.modals.pop();
         }, this.transition_delay);
       }
-    },
+    }
   },
-  computed: {},
+  computed: {}
 };
 </script>
