@@ -81,12 +81,14 @@ export default {
   created() {},
   methods: {
     closeModal() {
-      if (this.modal_closable) this.root.$emit("close", this.modal_index);
+      if (this.modal_closable) {
+        this.$___root.$emit("close", this.modal_index);
+      }
     }
   },
   computed: {
     is_panel() {
-      return this.modal_type == "panel";
+      return this.modal_type === "panel";
     }
   }
 };

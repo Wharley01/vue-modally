@@ -15,8 +15,8 @@
       :style="'z-index: ' + (101 + index)"
     >
       <component
-        @close="closeModal(index)"
-        @close-all="closeAllModal"
+        @close="closeModal(index,$event)"
+        @close-all="closeAllModal($event)"
         v-bind="modal.props"
         :is="modal.component"
       ></component>
@@ -43,20 +43,21 @@ export default {
     };
   },
   created() {
-    this.root.$on("addNewModal", this.addNewModal);
-    this.root.$on("close", this.closeModal);
-    this.root.$on("close-all", this.closeAllModal);
+    this.$___root.$on("addNewModal", this.addNewModal);
+    this.$___root.$on("close", this.closeModal);
+    this.$___root.$on("close-all", this.closeAllModal);
 
     if (typeof window != "undefined") {
       document.addEventListener("keydown", e => {
-        if (e.keyCode == 27) {
+        if (e.keyCode === 27) {
           this.closeLastModal();
+
         }
       });
     }
   },
   methods: {
-    addNewModal(component, configs) {
+    addNewModal(component, configs, key) {
       component = {
         ...component,
         ...configs,
@@ -70,13 +71,14 @@ export default {
       modals[index].closed = true;
       this.modals = modals;
     },
-    closeModal(index) {
+    closeModal(index,$event) {
       this.setModalCloseState(index);
+      this.fireClosedCallback(index,$event);
       setTimeout(() => {
         if (index > -1) this.modals.splice(index, 1);
       }, this.transition_delay);
     },
-    closeAllModal() {
+    closeAllModal($event) {
       // this.modals = [];
       // return;
       let total = this.modals.length;
@@ -87,12 +89,20 @@ export default {
 
       for (let index = 0; index < total; index++) {
         this.setModalCloseState(index);
+        this.fireClosedCallback(index,$event);
         setTimeout(() => this.modals.pop(), index * this.transition_delay);
+      }
+    },
+    fireClosedCallback(index,$event){
+      let closedFnc = this.modals[index].onClosed;
+      if(closedFnc){
+        closedFnc($event);
       }
     },
     closeLastModal() {
       if (this.modals.length > 0) {
         this.setModalCloseState(this.modals.length - 1);
+        this.fireClosedCallback(0);
 
         setTimeout(() => {
           if (this.modals.length > 0) this.modals.pop();

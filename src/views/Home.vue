@@ -17,13 +17,18 @@ export default {
       this.$vmodal.show(TestModalTwo, {
         props: { name: "wale", company: "macroware" },
         options: { width: 500, type: "panel" },
+      },() => {
+        console.log('I am closed')
       });
     },
-    test2() {
-      this.$vmodal.show(TestModalOne, {
+    async test2() {
+      let res = await this.$openModalAsync(TestModalOne, {
         props: { name: "Adewale" },
         options: { width: 900, padding: 40, type: "panel", blur: false },
       });
+
+      console.log({res})
+      console.log('resolved')
     },
   },
 };

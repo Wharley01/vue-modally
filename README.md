@@ -20,7 +20,7 @@ you can provide default options like this:
 
 Example:
 
-Vue.use(Modally, { width: 900; padding: 20 });
+Vue.use(Modally, { width: 900, padding: 20 });
 
 
 ```

@@ -2,7 +2,7 @@
   <div style="padding: 40px" class>
     <h1>TEST MODAL ONE</h1>
     <button @click="test">Fire second</button>
-    <button @click="$emit('close')">Close</button>
+    <button @click="$emit('close','test')">Close</button>
   </div>
 </template>
 

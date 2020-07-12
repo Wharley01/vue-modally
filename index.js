@@ -1,12 +1,33 @@
 import ModalContainer from './src/views/ModalsContainer.vue'
 import Modal from './src/views/Modal.vue'
-
 const VModal = {
-    root: null,
+    $___root: null,
     install(Vue, options = null) {
+        Vue.mixin({
+            data(){
+                return {
+                    v___modals: []
+                }
+            },
+            methods:{
+                async $openModalAsync(component,options){
+                    return new Promise((resolve, reject) => {
+                        this.$vmodal.show(component,options,($event) => {
+                            resolve($event);
+                        })
+                    })
+                }
+            },
+            computed: {
+                $___root() {
+                    return VModal.event;
+                }
+            }
+        })
+
 
         this.event = new Vue();
-        this.root = null;
+        this.$___root = null;
         this.installed = true;
 
 
@@ -34,33 +55,27 @@ const VModal = {
 
         // 4. add an instance method
         Vue.prototype.$vmodal = {
-            show(component, {
+            async show(component, {
                 props = {},
                 options = {}
-            }) {
+            },onClosed = null) {
+                let index = JSON.stringify(VModal.event.$data);
+
                 options = {
                     ...default_options,
                     ...options
                 }
+                // console.log({index})
                 VModal.event.$emit('addNewModal', {
                     component,
                     props,
-                    options
-                })
-
-
+                    options,
+                    onClosed
+                });
 
             }
         }
 
-        Vue.mixin({
-            computed: {
-                root() {
-                    return VModal.event;
-                }
-            }
-
-        })
     }
 }
 export default VModal
