@@ -12,7 +12,7 @@
       :modal_type="modal.options.type"
       :blur="modal.options.blur"
       :closed="modal.closed"
-      :style="'z-index: ' + (101 + index)"
+      :style="'z-index: ' + (201 + index)"
     >
       <component
         @close="closeModal(index,$event)"
@@ -110,6 +110,10 @@ export default {
       }
     }
   },
-  computed: {}
+  computed: {
+    cmp_key(){
+      return Math.random()
+    }
+  }
 };
 </script>
