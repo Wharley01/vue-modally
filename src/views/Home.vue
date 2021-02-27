@@ -4,6 +4,8 @@
 
     <button @click="test2">Fire first</button>
     <button @click="test">Fire second</button>
+    <button @click="side">Fire side</button>
+    <button @click="modal">Fire modal</button>
   </div>
 </template>
 
@@ -21,10 +23,31 @@ export default {
         console.log('I am closed')
       });
     },
+    modal() {
+      this.$vmodal.show(TestModalTwo, {
+        props: { name: "wale", company: "macroware" },
+        options: { width: 500, type: "modal" },
+      },() => {
+        console.log('I am closed')
+      });
+    },
+    side() {
+      this.$vmodal.show(TestModalTwo, {
+        props: { name: "wale", company: "macroware" },
+        options: { width: 400, type: "side" },
+      },() => {
+        console.log('I am closed')
+      });
+    },
     async test2() {
       let res = await this.$openModalAsync(TestModalOne, {
         props: { name: "Adewale" },
-        options: { width: 900, padding: 40, type: "panel", blur: false },
+        options: {
+          width: 900,
+          padding: 40,
+          type: "panel",
+          blur: false
+        },
       });
 
       console.log({res})

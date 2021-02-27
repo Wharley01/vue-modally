@@ -3,11 +3,10 @@
     <div
       class="vm__modal__container"
       :class="
-        `${modal_type == 'modal' && 'is-modal'} ${modal_type == 'panel' &&
-          'is-panel'}`
+        `${modal_class[modal_type].cls}`
       "
     >
-      <div :style="'padding: ' + (!is_panel ? modal_padding : 0) + 'px'" class="vm__modal__box">
+      <div :style="modal_class[modal_type].style" class="vm__modal__box">
         <div
           @click="
             (e) => {
@@ -21,13 +20,9 @@
           :class="
             `${
               !closed
-                ? is_panel
-                  ? 'slideInUp'
-                  : 'zoomIn'
-                : is_panel
-                ? 'slideOutDown'
-                : 'zoomOut'
-            } ${is_panel && 'is-panel'}`
+                ? modal_class[modal_type].anim_in
+                : modal_class[modal_type].anim_out
+            } ${modal_class[modal_type].cls}`
           "
         >
           <slot></slot>
@@ -75,7 +70,12 @@ export default {
   },
   data() {
     return {
-      transition_delay: 300
+      transition_delay: 300,
+      modal_class:{
+          modal: {cls: "is-modal",anim_in: "zoomIn",anim_out: "zoomIn",style: ''},
+          panel: {cls: "is-panel",anim_in: "slideInUp",anim_out: "slideOutDown",style: 'padding: 0'},
+          side: {cls: "is-side",anim_in: "slideInRight",anim_out: "slideOutRight",style: 'padding: 0'}
+      }
     };
   },
   created() {},
@@ -89,7 +89,11 @@ export default {
   computed: {
     is_panel() {
       return this.modal_type === "panel";
-    }
+    },
+    is_side() {
+      return this.modal_type === "side";
+    },
+
   }
 };
 </script>
@@ -119,6 +123,11 @@ export default {
       margin-top: auto;
       margin-bottom: 0;
     }
+    &.is-side {
+      margin-left: auto;
+      margin-bottom: 0;
+      width: auto!important;
+    }
     margin-top: auto;
     margin-bottom: auto;
     width: 100%;
@@ -128,6 +137,11 @@ export default {
         &.is-panel {
           border-bottom-left-radius: 0 !important;
           border-bottom-right-radius: 0 !important;
+        }
+        &.is-side {
+          border-bottom-right-radius: 0 !important;
+          border-top-right-radius: 0 !important;
+          height: 100vh;
         }
         border-radius: 15px;
         margin-left: auto;
